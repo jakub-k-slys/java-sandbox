@@ -19,30 +19,54 @@ import java.util.concurrent.TimeUnit;
 @Measurement(iterations = 10)
 @Warmup(iterations = 10)
 @BenchmarkMode(Mode.AverageTime)
-public class CounterBenchmark {
+public class AtomicCounterBenchmark {
     private final Counter counter = new Counter();
 
     @Benchmark
     @Threads(1)
-    public void singleThread(Blackhole blackhole){
+    public void getCnt_singleThread(Blackhole blackhole){
         blackhole.consume(counter.getCnt());
     }
 
     @Benchmark
     @Threads(2)
-    public void twoThreads(Blackhole blackhole){
+    public void getCnt_twoThreads(Blackhole blackhole){
         blackhole.consume(counter.getCnt());
     }
 
     @Benchmark
     @Threads(4)
-    public void fourThreads(Blackhole blackhole){
+    public void getCnt_fourThreads(Blackhole blackhole){
         blackhole.consume(counter.getCnt());
     }
 
     @Benchmark
     @Threads(8)
-    public void eightThreads(Blackhole blackhole){
+    public void getCnt_eightThreads(Blackhole blackhole){
         blackhole.consume(counter.getCnt());
+    }
+
+    @Benchmark
+    @Threads(1)
+    public void inc_singleThread(Blackhole blackhole){
+        counter.inc();
+    }
+
+    @Benchmark
+    @Threads(2)
+    public void inc_twoThreads(Blackhole blackhole){
+        counter.inc();
+    }
+
+    @Benchmark
+    @Threads(4)
+    public void inc_fourThreads(Blackhole blackhole){
+        counter.inc();
+    }
+
+    @Benchmark
+    @Threads(8)
+    public void inc_eightThreads(Blackhole blackhole){
+        counter.inc();
     }
 }
