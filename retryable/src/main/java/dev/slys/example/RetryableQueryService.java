@@ -34,7 +34,7 @@ public class RetryableQueryService implements QueryService {
                     Thread.currentThread().interrupt();
                     return Futures.immediateFailedFuture(exception);
                 }
-                int newBackoffTime = Math.max(backoffTime * BACKOFF_FACTOR, MAX_BACKOFF);
+                int newBackoffTime = Math.min(backoffTime * BACKOFF_FACTOR, MAX_BACKOFF);
                 int newRetryCount = retryCount - 1;
                 return executeWithRetry(newBackoffTime, newRetryCount);
             }
