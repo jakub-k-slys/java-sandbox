@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 @Fork(1)
 @State(Scope.Benchmark)
-@OutputTimeUnit(TimeUnit.MICROSECONDS)
-@Measurement(iterations = 10)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Measurement(iterations = 20)
 @Warmup(iterations = 10)
 @BenchmarkMode(Mode.AverageTime)
 public class AtomicCounterBenchmark {
