@@ -7,41 +7,40 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class RetryableQueryServiceTest {
+class RetryableRestService2Test {
 
     private static final Results RESULTS = new Results();
     @Mock
-    QueryService queryService;
+    RestService restService;
 
-    RetryableQueryService retryableQueryService;
+    RetryableRestService2 retryableQueryService;
 
     @BeforeEach
     void setup() {
-        retryableQueryService = new RetryableQueryService(queryService);
+        retryableQueryService = new RetryableRestService2(restService);
     }
 
     @Test
     void shouldCompleteSuccessfully() {
-        when(queryService.execute())
+        when(restService.execute())
                 .thenReturn(Futures.immediateFuture(RESULTS));
 
         retryableQueryService.execute();
 
-        verify(queryService, times(1)).execute();
+        verify(restService, times(1)).execute();
     }
 
     @Test
     void shouldCompleteSuccessfullyWithRetries() throws ExecutionException, InterruptedException {
-        when(queryService.execute())
+        when(restService.execute())
                 .thenReturn(Futures.immediateFailedFuture(new RuntimeException()))
                 .thenReturn(Futures.immediateFailedFuture(new RuntimeException()))
                 .thenReturn(Futures.immediateFailedFuture(new RuntimeException()))
@@ -49,12 +48,12 @@ class RetryableQueryServiceTest {
 
         ListenableFuture<Results> future = retryableQueryService.execute();
         assertThat(future.get()).isEqualTo(RESULTS);
-        verify(queryService, times(4)).execute();
+        verify(restService, times(4)).execute();
     }
 
     @Test
-    void shouldFailAfter4Retires() {
-        when(queryService.execute())
+    void shouldFailAfter6Retires() {
+        when(restService.execute())
                 .thenReturn(Futures.immediateFailedFuture(new RuntimeException()))
                 .thenReturn(Futures.immediateFailedFuture(new RuntimeException()))
                 .thenReturn(Futures.immediateFailedFuture(new RuntimeException()))
@@ -62,6 +61,6 @@ class RetryableQueryServiceTest {
 
         ListenableFuture<Results> future = retryableQueryService.execute();
         assertThatThrownBy(future::get);
-        verify(queryService, times(4)).execute();
+        verify(restService, times(6)).execute();
     }
 }

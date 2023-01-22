@@ -1,17 +1,13 @@
 package dev.slys.example;
 
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListeningExecutorService;
 
-import java.util.concurrent.TimeUnit;
+public class RetryableRestService2 implements RestService {
 
-public class RetryableQueryService2 implements QueryService {
-
-    private final QueryService delegate;
+    private final RestService delegate;
 
 
-    RetryableQueryService2(QueryService service) {
+    RetryableRestService2(RestService service) {
         this.delegate = service;
     }
 

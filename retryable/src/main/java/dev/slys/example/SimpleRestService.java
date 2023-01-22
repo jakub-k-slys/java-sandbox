@@ -4,7 +4,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class SimpleQueryService implements QueryService {
+public class SimpleRestService implements RestService {
 
     private static final ListeningExecutorService POOL = ThreadPool.newFixedPool();
 

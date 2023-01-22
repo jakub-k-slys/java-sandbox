@@ -6,17 +6,17 @@ import com.google.common.util.concurrent.ListeningExecutorService;
 
 import java.util.concurrent.TimeUnit;
 
-public class RetryableQueryService implements QueryService {
+public class RetryableRestService implements RestService {
 
     private static final ListeningExecutorService POOL = ThreadPool.newFixedPool();
-    private final QueryService delegate;
+    private final RestService delegate;
 
     private static final int STARTING_BACKOFF = 1;
     private static final int BACKOFF_FACTOR = 2;
     private static final int MAX_BACKOFF = 10;
     private static final int NUM_OF_RETRIES = 3;
 
-    RetryableQueryService(QueryService service) {
+    RetryableRestService(RestService service) {
         this.delegate = service;
     }
 
