@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("application")
     id("me.champeau.jmh") version "0.6.8"
 }
 
@@ -26,4 +27,14 @@ dependencies {
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+}
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "dev.slys.example.Main"
+    }
+}
+
+application {
+    mainClass.set("dev.slys.example.Main")
 }
