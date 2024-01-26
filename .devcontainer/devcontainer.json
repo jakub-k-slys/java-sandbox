@@ -1,0 +1,28 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.231.6/containers/python-3
+{
+    "name": "JAVA and PostgreSQL",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "sandbox",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+    // Set *default* container specific settings.json values on container create.
+    "settings": {
+    },
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+        "ms-azuretools.vscode-docker",
+        "vscjava.vscode-gradle"
+    ],
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Install project dependencies
+    "postCreateCommand": "sh ./.devcontainer/postinstall.sh",
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode",
+    "features": {
+      "github-cli": "latest"
+    },
+    "mounts": [
+    ]
+  }

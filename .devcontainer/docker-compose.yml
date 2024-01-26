@@ -1,0 +1,35 @@
+services:
+  sandbox:
+    build: 
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        VARIANT: 21-bullseye
+        GRADLE_VERSION: 8.5
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOSTNAME: db
+    networks:
+      - default
+  
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - default
+
+volumes:
+  postgres-data:
+networks:
+  default:
