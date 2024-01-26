@@ -12,7 +12,8 @@
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
         "ms-azuretools.vscode-docker",
-        "vscjava.vscode-gradle"
+        "vscjava.vscode-gradle",
+        "vscjava.vscode-java-debug"
     ],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],
